@@ -2,6 +2,7 @@ package com.trail_race.race_application_command_service.rabbit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trail_race.race_application_command_service.exception.dao.CommandSerializationException;
 import com.trail_race.race_application_command_service.rabbit.data.CommandMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,13 @@ public class RabbitMqSender {
 
     public void sendCommand(CommandMessage commandMessage) {
         try {
-            byte[] raw = objectMapper.writer().writeValueAsString(commandMessage).getBytes(StandardCharsets.UTF_8);
             log.info("Sending command:" + commandMessage);
+            byte[] raw = objectMapper.writer().writeValueAsString(commandMessage).getBytes(StandardCharsets.UTF_8);
             rabbitTemplate.send("command", new Message(raw));
         } catch (JsonProcessingException e) {
-            // todo better exception
-            throw new RuntimeException(e);
+            String message = "Error serializing command. Id:" + commandMessage.getId() + ", commandType:"
+                    + commandMessage.getCommandType();
+            throw new CommandSerializationException(message, e);
         }
     }
 }
