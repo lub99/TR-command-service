@@ -1,6 +1,7 @@
 package com.trail_race.race_application_command_service.application.service;
 
 import com.trail_race.race_application_command_service.application.dto.ApplicationRequest;
+import com.trail_race.race_application_command_service.exception.dao.BadRequestException;
 import com.trail_race.race_application_command_service.rabbit.RabbitMqSender;
 import com.trail_race.race_application_command_service.rabbit.data.CommandMessage;
 import com.trail_race.race_application_command_service.rabbit.data.CommandType;
@@ -48,15 +49,14 @@ public class RabbitApplicationService implements ApplicationService {
     }
 
     private void validateCreateApplication(ApplicationRequest applicationRequest) {
-        // todo better exception handling
         if (applicationRequest.getFirstName() == null) {
-            throw new IllegalArgumentException("FirstName is null");
+            throw new BadRequestException("FirstName is null");
         }
         if (applicationRequest.getLastName() == null) {
-            throw new IllegalArgumentException("LastName is null");
+            throw new BadRequestException("LastName is null");
         }
         if (applicationRequest.getDistance() == null) {
-            throw new IllegalArgumentException("Distance is null");
+            throw new BadRequestException("Distance is null");
         }
     }
 }
