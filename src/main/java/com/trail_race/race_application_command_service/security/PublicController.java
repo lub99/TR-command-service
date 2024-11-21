@@ -1,6 +1,7 @@
 package com.trail_race.race_application_command_service.security;
 
 import com.trail_race.race_application_command_service.security.dto.AuthenticationRequest;
+import com.trail_race.race_application_command_service.security.dto.AuthenticationResponse;
 import com.trail_race.race_application_command_service.security.dto.RefreshTokenRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

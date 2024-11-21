@@ -1,4 +1,4 @@
-package com.trail_race.race_application_command_service.config.security;
+package com.trail_race.race_application_command_service.security.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

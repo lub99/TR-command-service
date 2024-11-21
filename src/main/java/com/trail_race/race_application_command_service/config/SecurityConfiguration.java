@@ -1,4 +1,4 @@
-package com.trail_race.race_application_command_service.config.security;
+package com.trail_race.race_application_command_service.config;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.trail_race.race_application_command_service.security.dto.RsaKeyProperties;
 import com.trail_race.race_application_command_service.user.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
