@@ -1,0 +1,53 @@
+name: quality-check
+on: [ pull_request ]
+
+jobs:
+  checkstyle:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Run Checkstyle
+        uses: nikitasavinov/checkstyle-action@master
+        with:
+          checkstyle_config: './src/main/resources/checkstyle.xml'
+          workdir: './src/main/java'
+          reporter: 'github-pr-check'
+          tool_name: 'checkstyle'
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-22.04 ]
+        java: [ '17' ]
+        rabbitmq: [ 'rabbitmq:management' ]
+    runs-on: ${{ matrix.os }}
+    services:
+      rabbitmq:
+        image: ${{ matrix.rabbitmq }}
+        env:
+          RABBITMQ_DEFAULT_USER: admin
+          RABBITMQ_DEFAULT_PASS: admin
+        ports:
+          - 5672:5672
+        options: --health-cmd="rabbitmq-diagnostics -q ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java ${{ matrix.Java }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        env:
+          SPRING_PROFILES_ACTIVE: test
+        run: |
+          mvn -Dmaven.javadoc.skip=true verify \
+          --no-transfer-progress
+
