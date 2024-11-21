@@ -54,4 +54,6 @@ volumes:
     ```
     # java -jar .\target\race-application-command-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
     ```
+5. Add one user to H2 database on http://localhost:8080/h2-console/login.jsp with email and password. Password must be encrypted using following bcrypt generator https://bcrypt-generator.com/
+6. Use /api/v1/public/login api to get accessToken which must be sent for /api/v1/application/* endpoints
    
