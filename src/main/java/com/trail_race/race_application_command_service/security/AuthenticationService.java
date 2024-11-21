@@ -1,8 +1,9 @@
 package com.trail_race.race_application_command_service.security;
 
-import com.trail_race.race_application_command_service.config.security.JwtProperties;
+import com.trail_race.race_application_command_service.security.dto.JwtProperties;
 import com.trail_race.race_application_command_service.exception.dao.ForbiddenException;
 import com.trail_race.race_application_command_service.security.dto.AuthenticationRequest;
+import com.trail_race.race_application_command_service.security.dto.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
